@@ -1,30 +1,32 @@
-#Take a wikipedia URL for a battle and then output a file with the name, date and results of the battle.
+# Wiki Battle Scraper - Command line 
 import requests
 from tabulate import tabulate
 from bs4 import BeautifulSoup
 from argparse import ArgumentParser
-#----------------------------------------------------------------------------
-#Parsing
+# ----------------------------------------------------------------------------
+# Parsing
 parser = ArgumentParser(description='Pull battle details from wikipedia')
-parser.add_argument('-url', type=str, help='Usage: -url followed by the wiki URL you wish to use')
+parser.add_argument('-url', type=str, help='Usage: -url followed by page URL')
 args = vars(parser.parse_args())
 
-#Soup
+# Soup
 url = args['url']
 battle = requests.get(url).text
-soup = BeautifulSoup(battle,'lxml')
+soup = BeautifulSoup(battle, 'lxml')
 
-#Information to scrape
-Name = soup.find("h1", {"class":"firstHeading"})
-Date = soup.find(text="Date").findNext('td')
-Location = soup.find(text="Location").findNext('td')
-Result = soup.find(text="Result").findNext('td')
-Table = [["Name",Name.text],["Date",Date.text],["Result",Result.text]]
-FileName = (Name.text)
+# Information to scrape
+name = soup.find("h1", {"class": "firstHeading"})
+date = soup.find(text="Date").findNext('td')
+location = soup.find(text="Location").findNext('td')
+result = soup.find(text="Result").findNext('td')
 
-#Display in console
-print (tabulate(Table))
+#Put information into a table, set the output file name.
+table = [["Name", name.text], ["Date", date.text], ["Result", result.text]]
+fileName = (name.text)
 
-#Write to file 
-outfile = open(FileName + ".txt","w")
-outfile.write(tabulate(Table))
+# Display in console
+print (tabulate(table))
+
+# Write to file
+outfile = open(fileName + ".txt", "w")
+outfile.write(tabulate(table))
