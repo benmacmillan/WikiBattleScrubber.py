@@ -1,25 +1,31 @@
-# Wiki Battle Scraper - Script
+# Wiki Battle Scraper - URL Text
 import requests
 from tabulate import tabulate
 from bs4 import BeautifulSoup
-# ----------------------------------------------------------------------------
-# Prepare a tasty and beautiful soup to scrape:
-battle = requests.get('https://en.wikipedia.org/wiki/Battle_of_Waterloo').text
-soup = BeautifulSoup(battle, 'lxml')
 
-# Pull information from side bar:
-name = soup.find("h1", {"class": "firstHeading"})
-date = soup.find(text="Date").findNext('td')
-location = soup.find(text="Location").findNext('td')
-result = soup.find(text="Result").findNext('td')
+table = []
+headers = ['Name', 'Date', 'Location', 'Result']
+urls = open("urls.txt").read().splitlines()
 
-#Put information into a table, set the output file name.
-table = [["Name", name.text], ["Date", date.text], ["Result", result.text]]
-fileName = (name.text)
+for index in range(len(urls)):
+    # Prepare a tasty and beautiful soup to scrape:
+    battle = requests.get(urls[index]).text
+    soup = BeautifulSoup(battle, 'lxml')
 
-# Show to user in console
-print (tabulate(table))
+    # Pull information from side bar:
+    name = soup.find("h1", {"class": "firstHeading"})
+    date = soup.find(text="Date").findNext('td')
+    location = soup.find(text="Location").findNext('td')
+    result = soup.find(text="Result").findNext('td')
 
-# write details to file
-outfile = open(fileName + ".txt", "w")
-outfile.write(tabulate(table))
+    column = [name.text, date.text, location.text, result.text]
+    table.append(column)
+
+print(tabulate(table, headers))
+
+outputFile = open("Battles" + ".txt", "w")
+outputFile.write(tabulate(table, headers))
+outputFile.close
+
+
+  
