@@ -3,6 +3,7 @@ A basic web scraper that pulls some of the sidebar battle information for histor
 There are currently two versions of the project for command line use or just for directly editing the URL into my old script. 
 
 - Requires BeautifulSoup (https://www.crummy.com/software/BeautifulSoup/)
+- Requires Tabulate (https://pypi.org/project/tabulate/)
 
 ## WikiBattleScraper.py
 The First version of the script, it will pull the information from the URL that is listed directly in the script.
