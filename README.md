@@ -9,6 +9,6 @@ There are currently two versions of the project, the main script which takes URL
 The Main version of the script, place the URLs of wikipedia battles you wish to scrape (one per line) and it will create a table in the battles.txt document. **Some wikipedia battle pages use a non uniform formatting of the sidebar and thus will not currently work - Most should however.** 
 
 ## cl_scraper.py
-A now less useful version made to run in command line, it only can handle one URL at a time. 
+A now less useful version made to run in command line, it only can handle one URL at a time.  
 Example: **cl_scraper.py -url https://en.wikipedia.org/wiki/Battle_of_Thymbra**
 
